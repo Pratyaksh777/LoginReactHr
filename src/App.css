@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.form-control{
+  margin-bottom:20px;
+}
+.error{
+  color:red;
+}
