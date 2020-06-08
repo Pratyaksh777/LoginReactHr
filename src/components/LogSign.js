@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url("../img/iceberg.jpg")',
+    backgroundImage: 'url("https://wallpaperplay.com/walls/full/5/0/5/89015.jpg")',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -53,8 +53,8 @@ const initialValues ={
 }
 
 const onSubmit= values =>{
-   // console.log(values);
-   axios.post("localhost:3333/interviewees", values).then(response =>{
+  // console.log(values);
+   axios.post("/interviewees/1", values).then(response =>{
        console.log(response);
    }).catch(error =>{
        console.log(error);
