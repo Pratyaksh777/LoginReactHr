@@ -15,6 +15,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../App.css';
 import axios from 'axios'
+import {useState} from 'react';
+import {Redirect} from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,14 +56,7 @@ const initialValues ={
     password:''
 }
 
-const onSubmit= values =>{
-  // console.log(values);
-   axios.post("/interviewees/1", values).then(response =>{
-       console.log(response);
-   }).catch(error =>{
-       console.log(error);
-   });
-}
+
 
 const validationSchema  = Yup.object({
     email:Yup.string().email('Invalid email Format').required('required'),
@@ -68,6 +65,26 @@ const validationSchema  = Yup.object({
 
 export default function SignInSide() {
   const classes = useStyles();
+  const [isLogged, setisLogged] = useState(false);
+  const[error, seterror] = useState(false)
+  const onSubmit= values =>{
+    // console.log(values);
+     axios.post("/interviewees/1", values).then(response =>{
+        if(response.data.hasOwnProperty('data')){
+          sessionStorage.setItem('userData', response.data.data)
+          setisLogged(true)
+          
+        }
+        else{
+          seterror(true)
+        }
+        
+         //console.log(response);
+     }).catch(error =>{
+         console.log(error);
+     });
+     console.log(isLogged);
+  }
 
   const formik =   useFormik({
       initialValues,
@@ -76,6 +93,7 @@ export default function SignInSide() {
   })
 
   //console.log('Form vals', formik.values);
+  if(isLogged==false){
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -96,6 +114,7 @@ export default function SignInSide() {
               required
               fullWidth
               id="email"
+              onBlur={formik.handleBlur}
               label="Email Address"
               name="email"
               autoComplete="email"
@@ -103,7 +122,7 @@ export default function SignInSide() {
               value = {formik.values.email}
               autoFocus
             />
-            {formik.errors.email ? <div>{formik.errors.email}</div>:null}
+            {formik.errors.email && formik.touched.email ? <div className="error">{formik.errors.email}</div>:null}
             </div>
             <div className="form-control">
             <TextField
@@ -115,11 +134,12 @@ export default function SignInSide() {
               label="Password"
               type="password"
               id="password"
+              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value = {formik.values.password}
               autoComplete="current-password"
             />
-            {formik.errors.password ? <div>{formik.errors.password}</div>:null}
+            {formik.errors.password && formik.touched.password ? <div className="error">{formik.errors.password}</div>:null}
             </div>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -149,9 +169,21 @@ export default function SignInSide() {
             <Box mt={5}>
               
             </Box>
+           { error ?  <Alert severity="error" onClick={() => seterror(false)}>Invalid Credentials</Alert>:null}
           </form>
         </div>
       </Grid>
     </Grid>
   );
+  }
+  else{
+
+    return <Redirect to={"/Homepage"} />
+   
+    // return(
+    //   <div>
+    //     <h1>Signed in</h1>
+    //   </div>
+    // );
+  }
 }
