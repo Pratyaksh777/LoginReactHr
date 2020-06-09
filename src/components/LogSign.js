@@ -67,6 +67,10 @@ export default function SignInSide() {
   const classes = useStyles();
   const [isLogged, setisLogged] = useState(false);
   const[error, seterror] = useState(false)
+  const [loghook, setloghook] = useState(false);
+
+    
+  
   const onSubmit= values =>{
     // console.log(values);
      axios.post("/interviewees/1", values).then(response =>{
@@ -92,6 +96,17 @@ export default function SignInSide() {
       validationSchema
   })
 
+  if(loghook==true){
+    return <Redirect to={"/Homepage"} />
+    }
+    if(sessionStorage.getItem("userData")){
+      setloghook(true)
+      return <Redirect to={"/Homepage"} />
+    }
+    else{
+      
+        console.log("ok")
+    }
   //console.log('Form vals', formik.values);
   if(isLogged==false){
   return (

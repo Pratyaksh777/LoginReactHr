@@ -7,13 +7,17 @@ function Homepage() {
 
     const [loghook, setloghook] = useState(false);
 
+    if(loghook==true){
+        return <Redirect to={"/"} />
+    }
     if(sessionStorage.getItem("userData")){
         console.log("ok")
     }
     else{
-        if(loghook==true)
+        setloghook(true)
         return <Redirect to={"/"} />
     }
+    
 
     return (
         <div>
