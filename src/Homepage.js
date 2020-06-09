@@ -2,6 +2,7 @@ import React from 'react';
 import {useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import AllInterviewees from "./components/AllInterviewees"
 
 function Homepage() {
 
@@ -22,6 +23,7 @@ function Homepage() {
     return (
         <div>
             <h1>Hello</h1>
+            <AllInterviewees />
             <Button  variant="contained" color="secondary" onClick={()=>{
                 sessionStorage.clear();
                  setloghook(true); 

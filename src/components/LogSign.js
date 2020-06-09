@@ -77,6 +77,12 @@ export default function SignInSide() {
         if(response.data.hasOwnProperty('data')){
           sessionStorage.setItem('userData', response.data.data)
           setisLogged(true)
+          const pid = response.data.data.id;
+          axios.post("/timeupdate/"+pid, null).then(response =>{
+            console.log(response)
+          }).catch(error =>{
+            console.log("Error in updating time")
+          })
           
         }
         else{
@@ -87,7 +93,7 @@ export default function SignInSide() {
      }).catch(error =>{
          console.log(error);
      });
-     console.log(isLogged);
+     
   }
 
   const formik =   useFormik({
