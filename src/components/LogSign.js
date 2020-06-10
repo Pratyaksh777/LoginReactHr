@@ -75,15 +75,8 @@ export default function SignInSide() {
     // console.log(values);
      axios.post("/interviewees/1", values).then(response =>{
         if(response.data.hasOwnProperty('data')){
-          sessionStorage.setItem('userData', response.data.data)
-          setisLogged(true)
-          const pid = response.data.data.id;
-          axios.post("/timeupdate/"+pid, null).then(response =>{
-            console.log(response)
-          }).catch(error =>{
-            console.log("Error in updating time")
-          })
-          
+          sessionStorage.setItem('userData',response.data.data.id)
+          setisLogged(true)          
         }
         else{
           seterror(true)
@@ -190,7 +183,7 @@ export default function SignInSide() {
             <Box mt={5}>
               
             </Box>
-           { error ?  <Alert severity="error" onClick={() => seterror(false)}>Invalid Credentials</Alert>:null}
+           { error ?  <Alert severity="error" onClick={() => seterror(false)}>Invalid Credentials or Account no longer exists</Alert>:null}
           </form>
         </div>
       </Grid>

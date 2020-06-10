@@ -2,32 +2,47 @@ import React from 'react';
 import {useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import AllInterviewees from "./components/AllInterviewees"
+import FetchComp from "./components/FetchComp"
+import LogOut from './components/LogOut';
+import Delete from './components/Delete';
 
 function Homepage() {
 
-    const [loghook, setloghook] = useState(false);
-
-    if(loghook==true){
-        return <Redirect to={"/"} />
+    // const [loghook, setloghook] = useState(false);
+    const [viewList, setviewList] = useState(false);
+    const [upd, setupd] =useState(false)
+   
+    if(upd==true){
+        return <Redirect to={"/Update"} />
     }
-    if(sessionStorage.getItem("userData")){
-        console.log("ok")
-    }
-    else{
-        setloghook(true)
-        return <Redirect to={"/"} />
-    }
-    
 
     return (
         <div>
             <h1>Hello</h1>
-            <AllInterviewees />
-            <Button  variant="contained" color="secondary" onClick={()=>{
+            
+            <Button variant="contained" color="primary" onClick={() =>{
+                
+                    setviewList(true)
+                
+            }}>
+                View Users
+                </Button> 
+                <br/>   
+            
+            {/* <Button  variant="Danger"  onClick={()=>{
                 sessionStorage.clear();
                  setloghook(true); 
-                }}>Log out</Button> 
+                }}>Log out</Button><br /> */}
+               <br /> <LogOut /> <br />
+            <Button variant="contained" onClick={() =>{
+               setupd(true)
+            }}>
+                Update Profile
+                </Button> <br /> 
+                <br /> <Delete />  
+                {viewList ? <FetchComp />:null} 
+                
+                
         </div>
     )
 }
