@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
-import SignInSide from './components/LogSign';
-import {Redirect} from 'react-router-dom'
-import Routes from './routes';
+import {Button,Form,FormGroup,Lable,Input} from 'reactstrap';
+import { GoogleLoginButton } from "react-social-login-buttons";
 
 function App() {
   const start = "/";
