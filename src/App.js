@@ -6,10 +6,10 @@ import { GoogleLoginButton } from "react-social-login-buttons";
 function App() {
   const start = "/";
   return (
-    <div className="App">
+    <Form className="App">
       <Routes name={start}/>
       {/* <SignInSide /> */}
-    </div>
+    </Form>
   );
 }
 
