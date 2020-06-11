@@ -83,7 +83,14 @@ const validationSchema= Yup.object({
     }
   ),
   email:Yup.string().email('Invalid email Format').required('required'),
-  password:Yup.string().required("Required").min(8, 'Too Short')
+  password:Yup.string().required("Required").min(8, 'Too Short'),
+  Newpassword:Yup.string().test(
+    "Newpassword",
+    "Passwords don't match",
+    value => {
+      return value ==formik.values.Cpassword;
+    }
+  )
 })
 
 
@@ -99,7 +106,7 @@ export default function UpdateUser() {
         formik.values.Last_Name = rsp.Last_Name;
    
         formik.values.email= rsp.email;
-        formik.values.password = rsp.password;
+        formik.values.password = "";
            var currentTimex = rsp.DOB;
    
         var currentTime = new Date(currentTimex)
@@ -239,22 +246,40 @@ export default function UpdateUser() {
             </label>
             {formik.errors.DOB ? <div className={classes.error}>Error</div>:null}
             </Grid>
+            <label>Password Update</label>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+                
                 fullWidth
-                name="password"
-                label="Password"
+                name="Newpassword"
+                label="New Password"
                 type="password"
-                id="password"
+                id="Newpassword"
                 autoComplete="current-password"
-                onChange={event => formik.values.password=event.target.value}
-                defaultValue = {formik.values.password}
+                onChange={(event) => {
+                  formik.values.Newpassword=event.target.value
+                  formik.values.password = event.target.value
+                }}
+                defaultValue = {formik.values.Newpassword}
               />
-              {formik.errors.password ? <div className={classes.error}>Error</div>:null}
+              {formik.errors.Newpassword ? <div className={classes.error}>Error</div>:null}
             </Grid>
-            
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                
+                fullWidth
+                name="Cpassword"
+                label="Confirm Password"
+                type="password"
+                id="Cpassword"
+                autoComplete="current-password"
+                onChange={event => formik.values.Cpassword=event.target.value}
+                defaultValue = {formik.values.Cpassword}
+              />
+              {formik.errors.Cpassword ? <div className={classes.error}>Error</div>:null}
+            </Grid>
           </Grid>
           <Button
             type="submit"
