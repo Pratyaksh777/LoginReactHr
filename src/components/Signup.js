@@ -17,7 +17,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import '../App.css';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 var moment = require('moment'); // require
 moment().format(); 
@@ -88,7 +89,7 @@ const validationSchema= Yup.object({
     )
   })
 
-  
+
 })
 
 
@@ -106,7 +107,16 @@ export default function SignUp() {
     axios.post("/interviewees", values).then(response =>{
         if(response.data.success==="false"){
           seterror(true)
-          
+          toast.error('Error! An Account with that email already exists', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+
         }
         else{
           setsign(true)
