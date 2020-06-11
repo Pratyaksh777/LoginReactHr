@@ -137,15 +137,44 @@ export default function UpdateUser() {
   const [loghook, setloghook] = useState(false);
   const [load, setload] =useState(false)
   const [back, setback] =useState(false)
-  const [succ, setsucc] = useState({sval:'false'})
+  
   const onSubmit = values => {
     console.log(formik.values)
     axios.patch("/interviewees/"+x, values).then(response =>{
-      setsucc({sval:'true'})
+      if(response.data.success=="success"){
+        toast.success('🦄 Account Updated Successfully!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }
+      else{
+        toast.error('Error! An Account with that email already exists', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }
         // console.log(response)
       }).catch(error =>{
-        console.log(error)
-        setsucc({sval:'error'})
+        toast.error('Error!An Account with that email already exists', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+       
       })
       
   }; 
@@ -202,7 +231,7 @@ export default function UpdateUser() {
                 onChange={event => formik.values.First_Name=event.target.value}
                 autoFocus
               />
-              {formik.errors.First_Name && formik.touched.First_Name ? <div className="error">{formik.errors.First_Name}</div>:null}
+              {formik.errors.First_Name && formik.touched.First_Name ? <div className="error">Hello</div>:null}
             </Grid>
             <Grid item xs={12} sm={6}>
                
@@ -216,7 +245,7 @@ export default function UpdateUser() {
                 name="Last_Name"
                 onChange={event => formik.values.Last_Name=event.target.value}
               />
-              {formik.errors.Last_Name ? <div className="error">{formik.errors.First_Name}</div>:null}
+              {formik.errors.Last_Name && formik.touched.Last_Name ? <div className="error">{formik.errors.Last_Name}</div>:null}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -231,7 +260,7 @@ export default function UpdateUser() {
                 onChange={event => formik.values.email=event.target.value}
 
               />
-              {formik.errors.email ? <div className="error">{formik.errors.email}</div>:null}
+              {formik.errors.email && formik.touched.email ? <div className="error">{formik.errors.email}</div>:null}
             </Grid>
             <Grid item xs={12}>
               <label>
@@ -245,7 +274,7 @@ export default function UpdateUser() {
               showYearDropdown scrollableMonthYearDropdown/>
               
             </label>
-            {formik.errors.DOB ? <div className="error">Error</div>:null}
+            {formik.errors.DOB && formik.touched.DOB ? <div className="error">{formik.errors.DOB}</div>:null}
             </Grid>
             <label>Password Update</label>
             <Grid item xs={12}>
@@ -264,7 +293,7 @@ export default function UpdateUser() {
                 }}
                 defaultValue = {formik.values.Newpassword}
               />
-              {formik.errors.Newpassword ? <div className={classes.error}>Error</div>:null}
+              {formik.errors.Newpassword && formik.touched.Newpassword ? <div className="error">{formik.errors.Newpassword}</div>:null}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -279,7 +308,7 @@ export default function UpdateUser() {
                 onChange={event => formik.values.Cpassword=event.target.value}
                 defaultValue = {formik.values.Cpassword}
               />
-              {formik.errors.Cpassword ? <div className={classes.error}>Error</div>:null}
+              {formik.errors.Cpassword && formik.touched.Cpassword ? <div className="error">{formik.errors.Cpassword}</div>:null}
             </Grid>
           </Grid>
           <Button
@@ -299,9 +328,7 @@ export default function UpdateUser() {
       <Box mt={5}>
       <Button variant="contained" onClick={() =>{
       setback(true);
-    }}>Back To Home</Button><br/>
-    { succ.sval=="true" ?  <Alert severity="success" onClick={() => setsucc({sval:'false'})}>Account Updated Successfully</Alert>: succ.sval==false ?
-      <Alert severity="error" onClick={() => setsucc({sval:'false'})}>Some error occurred</Alert>:null}
+    }}>Back To Home</Button>
       </Box>
       <br/>
       <LogOut />

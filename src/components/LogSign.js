@@ -73,6 +73,7 @@ export default function SignInSide() {
   const onSubmit= values =>{
     // console.log(values);
      axios.post("/interviewees/1", values).then(response =>{
+        console.log(response);
         if(response.data.hasOwnProperty('data')){
           sessionStorage.setItem('userData',response.data.data.id)
           setisLogged(true)          

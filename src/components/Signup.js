@@ -79,7 +79,16 @@ const validationSchema= Yup.object({
     }
   ),
   email:Yup.string().email('Invalid email Format').required('required'),
-  password:Yup.string().required("Required").min(8, 'Too Short')
+  password:Yup.string().required("Required").min(8, 'Too Short'),
+  Cpassword:Yup.string().when("password", {
+    is: val => (val && val.length > 0 ? true : false),
+    then: Yup.string().oneOf(
+      [Yup.ref("password")],
+      "Both password need to be the same"
+    )
+  })
+
+  
 })
 
 
@@ -147,7 +156,7 @@ export default function SignUp() {
                 label="First Name"
                 onChange={event => formik.values.First_Name=event.target.value}
                 onBlur={formik.handleBlur}
-                autoFocus
+                
               />
               {formik.errors.First_Name && formik.touched.First_Name ? <div className="error">{formik.errors.First_Name}</div>:null}
             </Grid>
@@ -209,6 +218,22 @@ export default function SignUp() {
               {formik.errors.password && formik.touched.password ? <div className="error">{formik.errors.password}</div>:null}
             </Grid>
             <Grid item xs={12}>
+            <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="Cpassword"
+                label="Password"
+                type="password"
+                id="Cpassword"
+                onBlur={formik.handleBlur}
+                autoComplete="current-password"
+                onChange={event => formik.values.Cpassword=event.target.value}
+                defaultValue = {formik.values.Cpassword}
+              />
+              {formik.errors.Cpassword && formik.touched.Cpassword ? <div className="error">{formik.errors.Cpassword}</div>:null}
+            </Grid>
+            <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
@@ -226,7 +251,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/login" >
+              <Link to="/" >
                 Already have an account? Sign in
               </Link>
             </Grid>
