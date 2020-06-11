@@ -1,30 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-
+import DatePicker from 'react-datepicker';
+import {Redirect, Link} from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+var moment = require('moment'); // require
+moment().format(); 
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,8 +42,85 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+function formatDate(date) { 
+  var day = date.getDate(); 
+  if (day < 10) { 
+      day = "0" + day; 
+  } 
+  var month = date.getMonth() + 1; 
+  if (month < 10) { 
+      month = "0" + month; 
+  } 
+  var year = date.getFullYear(); 
+  return year + "-" + month + "-" + day; 
+} 
+
+const initialValues ={
+  First_Name:'',
+  Last_Name:'',
+  DOB:'',
+  email:"",
+  password:""
+}
+
+
+const validationSchema= Yup.object({
+  First_Name:Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('required'),
+  Last_Name:Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('required'),
+  DOB:Yup.string().test(
+    "DOB",
+    "You must be at least 18 or above",
+    value => {
+      return moment().diff(moment(value),'years') >= 18;
+    }
+  ),
+  email:Yup.string().email('Invalid email Format').required('required'),
+  password:Yup.string().required("Required")
+})
+
+
+
+var formik;
+
+
 export default function SignUp() {
   const classes = useStyles();
+  const [selDate, setselDate] = useState(null);
+  const [error, seterror] =useState(false);
+  const [sign, setsign] = useState(false);
+  const onSubmit = values => {
+    console.log(values)
+    axios.post("/interviewees", values).then(response =>{
+        if(response.data.success==="false"){
+          seterror(true)
+          
+        }
+        else{
+          setsign(true)
+          seterror(false)
+        }
+
+        console.log(response)
+      }).catch(error =>{
+        console.log(error)
+      })
+      
+      
+  }; 
+  
+
+  formik =   useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema
+  })
+  
+  if(sign==true){
+    return <Redirect to={"/"} />
+  }
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,33 +132,45 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
+            <TextField
                 variant="outlined"
-                required
                 fullWidth
-                id="firstName"
+                defaultValue={formik.values.First_Name}
+                name="First_Name"
+                required
+                id="First_Name"
                 label="First Name"
+                onChange={event => formik.values.First_Name=event.target.value}
                 autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
+            <TextField
                 variant="outlined"
-                required
                 fullWidth
-                id="lastName"
+                required
+                defaultValue={formik.values.Last_Name}
+                id="Last_Name"
                 label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                name="Last_Name"
+                onChange={event => formik.values.Last_Name=event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <label>
+                Date of Birth &ensp;
+              <DatePicker name="DOB" id="DOB" value = {formik.values.DOB} selected={selDate} onChange={date => {setselDate(date)
+             var ty =formatDate(date);
+              formik.values.DOB=ty}} 
+              dateFormat='yyyy/MM/dd' maxDate={new Date()}              
+              showYearDropdown scrollableMonthYearDropdown/>
+            </label>
+            </Grid>
+            <Grid item xs={12}>
+            <TextField
                 variant="outlined"
                 required
                 fullWidth
@@ -93,10 +178,13 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                defaultValue={formik.values.email}
+                onChange={event => formik.values.email=event.target.value}
+
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+            <TextField
                 variant="outlined"
                 required
                 fullWidth
@@ -105,6 +193,8 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={event => formik.values.password=event.target.value}
+                defaultValue = {formik.values.password}
               />
             </Grid>
             <Grid item xs={12}>
@@ -125,7 +215,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to="/login" >
                 Already have an account? Sign in
               </Link>
             </Grid>
@@ -133,7 +223,7 @@ export default function SignUp() {
         </form>
       </div>
       <Box mt={5}>
-        <Copyright />
+      { error ?  <Alert severity="error" onClick={() => seterror(false)}>Error! Account already exists</Alert>:null}
       </Box>
     </Container>
   );

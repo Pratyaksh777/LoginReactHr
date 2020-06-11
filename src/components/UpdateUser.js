@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import DatePicker from 'react-datepicker';
@@ -16,25 +15,14 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios'
 import LogOut from './LogOut';
-
+import Alert from '@material-ui/lab/Alert';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { red } from '@material-ui/core/colors';
 
 var moment = require('moment'); // require
 moment().format(); 
 
-function Copyright() {
-   
-
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  error:{
+    color:red
+  }
 }));
 
 const initialValues ={
@@ -92,7 +83,7 @@ const validationSchema= Yup.object({
     }
   ),
   email:Yup.string().email('Invalid email Format').required('required'),
-  password:Yup.string().required("Required")
+  password:Yup.string().required("Required").min(8, 'Too Short')
 })
 
 
@@ -122,6 +113,7 @@ export default function UpdateUser() {
         // console.log(formik.values.First_Name)
         
       }).catch(error =>{
+       
         console.log(error)
       })
 
@@ -138,13 +130,15 @@ export default function UpdateUser() {
   const [loghook, setloghook] = useState(false);
   const [load, setload] =useState(false)
   const [back, setback] =useState(false)
+  const [succ, setsucc] = useState({sval:'false'})
   const onSubmit = values => {
-    console.log(values)
+    console.log(formik.errors)
     axios.patch("/interviewees/"+x, values).then(response =>{
-      
+      setsucc({sval:'true'})
         // console.log(response)
       }).catch(error =>{
         console.log(error)
+        setsucc({sval:'error'})
       })
       
   }; 
@@ -171,11 +165,12 @@ export default function UpdateUser() {
     if(back==true){
       return <Redirect to={"/Homepage"} />
     }
-    
+    const fnameError = () => toast("First Name");
     
   return (
     <div>{load ? 
     <Container component="main" maxWidth="xs">
+      
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -199,7 +194,7 @@ export default function UpdateUser() {
                 onChange={event => formik.values.First_Name=event.target.value}
                 autoFocus
               />
-              
+              {formik.errors.First_Name ? <div className={classes.error}>Error</div>:null}
             </Grid>
             <Grid item xs={12} sm={6}>
                
@@ -213,7 +208,7 @@ export default function UpdateUser() {
                 name="Last_Name"
                 onChange={event => formik.values.Last_Name=event.target.value}
               />
-              
+              {formik.errors.Last_Name ? <div className={classes.error}>Error</div>:null}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -228,6 +223,7 @@ export default function UpdateUser() {
                 onChange={event => formik.values.email=event.target.value}
 
               />
+              {formik.errors.email ? <div className={classes.error}>Error</div>:null}
             </Grid>
             <Grid item xs={12}>
               <label>
@@ -239,7 +235,9 @@ export default function UpdateUser() {
               dateFormat='yyyy/MM/dd' maxDate={new Date()}
               
               showYearDropdown scrollableMonthYearDropdown/>
+              
             </label>
+            {formik.errors.DOB ? <div className={classes.error}>Error</div>:null}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -254,6 +252,7 @@ export default function UpdateUser() {
                 onChange={event => formik.values.password=event.target.value}
                 defaultValue = {formik.values.password}
               />
+              {formik.errors.password ? <div className={classes.error}>Error</div>:null}
             </Grid>
             
           </Grid>
@@ -274,7 +273,9 @@ export default function UpdateUser() {
       <Box mt={5}>
       <Button variant="contained" onClick={() =>{
       setback(true);
-    }}>Back To Home</Button>
+    }}>Back To Home</Button><br/>
+    { succ.sval=="true" ?  <Alert severity="success" onClick={() => setsucc({sval:'false'})}>Account Updated Successfully</Alert>: succ.sval==false ?
+      <Alert severity="error" onClick={() => setsucc({sval:'false'})}>Some error occurred</Alert>:null}
       </Box>
       <br/>
       <LogOut />

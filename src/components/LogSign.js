@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -16,7 +15,7 @@ import * as Yup from 'yup';
 import '../App.css';
 import axios from 'axios'
 import {useState} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 
 
@@ -134,7 +133,7 @@ export default function SignInSide() {
               autoComplete="email"
               onChange={formik.handleChange}
               value = {formik.values.email}
-              autoFocus
+             
             />
             {formik.errors.email && formik.touched.email ? <div className="error">{formik.errors.email}</div>:null}
             </div>
@@ -170,12 +169,12 @@ export default function SignInSide() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                {/* <Link href="#" variant="body2"> */}
                   Forgot password?
-                </Link>
+                {/* </Link> */}
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/Signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

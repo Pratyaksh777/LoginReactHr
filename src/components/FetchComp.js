@@ -23,6 +23,7 @@ function FetchComp() {
     var obj =new Object();
     var listItems;
     useEffect(() =>{
+        let source= axios.CancelToken.source();
         axios.get('/interviewees').then(response =>{
             obj = response.data.data;
             for(var i=0;i<obj.length;i++){
@@ -39,7 +40,12 @@ function FetchComp() {
             console.log(error)
           })
 
-    })
+          return () =>{
+            console.log("Unmounting and cleanup");
+            source.cancel();
+          };
+
+    }, [])
    
     
     if(sessionStorage.getItem("userData")){
