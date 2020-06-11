@@ -16,6 +16,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
+import '../App.css';
+
 
 var moment = require('moment'); // require
 moment().format(); 
@@ -77,7 +79,7 @@ const validationSchema= Yup.object({
     }
   ),
   email:Yup.string().email('Invalid email Format').required('required'),
-  password:Yup.string().required("Required")
+  password:Yup.string().required("Required").min(8, 'Too Short')
 })
 
 
@@ -144,8 +146,10 @@ export default function SignUp() {
                 id="First_Name"
                 label="First Name"
                 onChange={event => formik.values.First_Name=event.target.value}
+                onBlur={formik.handleBlur}
                 autoFocus
               />
+              {formik.errors.First_Name && formik.touched.First_Name ? <div className="error">{formik.errors.First_Name}</div>:null}
             </Grid>
             <Grid item xs={12} sm={6}>
             <TextField
@@ -156,8 +160,10 @@ export default function SignUp() {
                 id="Last_Name"
                 label="Last Name"
                 name="Last_Name"
+                onBlur={formik.handleBlur}
                 onChange={event => formik.values.Last_Name=event.target.value}
               />
+              {formik.errors.Last_Name && formik.touched.Last_Name ? <div className="error">{formik.errors.Last_Name}</div>:null}
             </Grid>
             <Grid item xs={12}>
               <label>
@@ -165,9 +171,10 @@ export default function SignUp() {
               <DatePicker name="DOB" id="DOB" value = {formik.values.DOB} selected={selDate} onChange={date => {setselDate(date)
              var ty =formatDate(date);
               formik.values.DOB=ty}} 
-              dateFormat='yyyy/MM/dd' maxDate={new Date()}              
+              dateFormat='yyyy/MM/dd' maxDate={new Date()}  onBlur={formik.handleBlur}            
               showYearDropdown scrollableMonthYearDropdown/>
             </label>
+            {formik.errors.DOB && formik.touched.DOB ? <div className="error">{formik.errors.DOB}</div>:null}
             </Grid>
             <Grid item xs={12}>
             <TextField
@@ -179,9 +186,11 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 defaultValue={formik.values.email}
+                onBlur={formik.handleBlur}
                 onChange={event => formik.values.email=event.target.value}
 
               />
+              {formik.errors.email && formik.touched.email ? <div className="error">{formik.errors.email}</div>:null}
             </Grid>
             <Grid item xs={12}>
             <TextField
@@ -192,10 +201,12 @@ export default function SignUp() {
                 label="Password"
                 type="password"
                 id="password"
+                onBlur={formik.handleBlur}
                 autoComplete="current-password"
                 onChange={event => formik.values.password=event.target.value}
                 defaultValue = {formik.values.password}
               />
+              {formik.errors.password && formik.touched.password ? <div className="error">{formik.errors.password}</div>:null}
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
