@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {Redirect} from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import { Button } from 'reactstrap';
 import FetchComp from "./components/FetchComp"
 import LogOut from './components/LogOut';
 import Delete from './components/Delete';
