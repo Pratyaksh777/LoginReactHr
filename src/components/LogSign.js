@@ -17,6 +17,7 @@ import axios from 'axios'
 import {useState} from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
+import history from '../history';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const initialValues ={
     email:'',
     password:''
+    
 }
 
 
@@ -63,6 +65,9 @@ const validationSchema  = Yup.object({
 })
 
 export default function SignInSide() {
+
+  
+
   const classes = useStyles();
   const [isLogged, setisLogged] = useState(false);
   const[error, seterror] = useState(false)
@@ -76,6 +81,7 @@ export default function SignInSide() {
         console.log(response);
         if(response.data.hasOwnProperty('data')){
           sessionStorage.setItem('userData',response.data.data.id)
+          
           setisLogged(true)          
         }
         else{
@@ -97,9 +103,11 @@ export default function SignInSide() {
   })
 
   if(loghook==true){
+    history.push("/")
     return <Redirect to={"/Homepage"} />
     }
     if(sessionStorage.getItem("userData")){
+      history.push("/")
       setloghook(true)
       return <Redirect to={"/Homepage"} />
     }
@@ -156,6 +164,7 @@ export default function SignInSide() {
             />
             {formik.errors.password && formik.touched.password ? <div className="error">{formik.errors.password}</div>:null}
             </div>
+            
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

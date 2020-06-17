@@ -7,9 +7,10 @@ import UpdateUser from "./components/UpdateUser"
 import FetchComp from "./components/FetchComp";
 import LogOut from "./components/LogOut";
 import App from "./App.js"
+import history from './history';
 
 const Routes = () => (
-    <BrowserRouter>
+    <BrowserRouter history={history}>
     <Switch>
         <Route exact path="/" component={LogSign}/>
         <Route path="/LogSign" component={LogSign} />

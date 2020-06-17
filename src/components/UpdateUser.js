@@ -19,6 +19,7 @@ import Alert from '@material-ui/lab/Alert';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { red } from '@material-ui/core/colors';
+import history from '../history';
 
 var moment = require('moment'); // require
 moment().format(); 
@@ -97,10 +98,10 @@ const validationSchema= Yup.object({
 var x;
 var formik;
 export default function UpdateUser() {
-  
+  history.replace("/Homepage")
   useEffect(() =>{
     let source= axios.CancelToken.source();
-    axios.get('/interviewees/'+x).then(response =>{
+    axios.get('/interviewees/'+x, {cancelToken:source.token}).then(response =>{
         rsp=response.data.data;
         formik.values.First_Name=rsp.First_Name;
         formik.values.Last_Name = rsp.Last_Name;
@@ -199,6 +200,7 @@ export default function UpdateUser() {
         return <Redirect to={"/"} />
     }  
     if(back==true){
+      
       return <Redirect to={"/Homepage"} />
     }
     const fnameError = () => toast("First Name");

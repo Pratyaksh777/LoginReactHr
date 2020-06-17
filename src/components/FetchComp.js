@@ -24,7 +24,7 @@ function FetchComp() {
     var listItems;
     useEffect(() =>{
         let source= axios.CancelToken.source();
-        axios.get('/interviewees').then(response =>{
+        axios.get('/interviewees',{cancelToken:source.token}).then(response =>{
             obj = response.data.data;
             for(var i=0;i<obj.length;i++){
                 
@@ -36,11 +36,18 @@ function FetchComp() {
             }
             setload(true)
             
+
+            arr.sort(function(a,b){
+                return new Date(b.last_login) - new Date(a.last_login);
+              });
+              console.log("arr", arr); 
+
           }).catch(error =>{
             console.log(error)
           })
 
           return () =>{
+              arr=[];
             console.log("Unmounting and cleanup");
             source.cancel();
           };
@@ -58,7 +65,7 @@ function FetchComp() {
 
     return  (
         <div>
-            {load ? <div>{listItems = arr.map((item, index) =>
+            {load ? <div style={{float:'right'}}>{listItems = arr.map((item, index) =>
             <Card  style={styles} key={item.id}><Card.Body><Card.Title>{item.First_Name}&emsp;{item.Last_Name}</Card.Title><Card.Text>Last Login:&ensp;{item.last_login}
             </Card.Text></Card.Body><br/></Card>
           )}

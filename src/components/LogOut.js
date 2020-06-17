@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 
 function lastTime(){
     axios.post("/timeupdate/"+sessionStorage.userData, null).then(response =>{
@@ -27,7 +27,7 @@ function LogOut() {
     }
     return (
         <div>
-            <Button  variant="Danger"  onClick={()=>{
+            <Button  variant="outlined" color="secondary"  onClick={()=>{
                 lastTime();
                 sessionStorage.clear();
                  setloghook(true); 

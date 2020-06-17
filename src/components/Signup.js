@@ -141,7 +141,10 @@ export default function SignUp() {
   if(sign==true){
     return <Redirect to={"/"} />
   }
-  
+  if(sessionStorage.getItem("userData")){
+    setsign(true);
+    return <Redirect to={"/Homepage"} />
+  }
 
   return (
     <Container component="main" maxWidth="xs">
