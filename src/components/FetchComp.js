@@ -36,7 +36,7 @@ function FetchComp() {
             }
             setload(true)
             
-
+            
             // arr.sort(function(a,b){
             //     return new Date(b.last_login) - new Date(a.last_login);
             //   });
@@ -44,6 +44,9 @@ function FetchComp() {
 
           }).catch(error =>{
             console.log(error)
+          }).finally(() => {
+
+            console.log(arr)
           })
 
           return () =>{
@@ -66,7 +69,7 @@ function FetchComp() {
     return  (
         <div>
             {load ? <div style={{float:'right'}}>{listItems = arr.map((item, index) =>
-            <Card  style={styles} key={item.id}><Card.Body><Card.Title>{item.First_Name}&emsp;{item.Last_Name}</Card.Title><Card.Text>Last Login:&ensp;{item.last_login}
+            <Card  style={styles} key={item.id}><Card.Body><Card.Title>{item.First_Name}&emsp;{item.Last_Name}</Card.Title><Card.Text>Last Login:&ensp;{item.last_login.toString()}
             </Card.Text></Card.Body><br/></Card>
           )}
              </div>:null}

@@ -27,7 +27,7 @@ function Delete() {
     }
 
     return (
-        <div>
+        <div >
            <Button variant="contained" onClick={() => {
                dbquery();
                sessionStorage.clear();

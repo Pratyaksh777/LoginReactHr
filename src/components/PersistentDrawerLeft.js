@@ -18,6 +18,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {Link} from 'react-router-dom';
 import LogOut from './LogOut';
 import UpdateIcon from '@material-ui/icons/Update';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
 
 import PropTypes from 'prop-types';
 
@@ -148,7 +150,7 @@ export default function PersistentDrawerLeft(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Welcome
+            {props.title}
           </Typography>
           
         </Toolbar>
