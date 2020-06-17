@@ -37,10 +37,10 @@ function FetchComp() {
             setload(true)
             
 
-            arr.sort(function(a,b){
-                return new Date(b.last_login) - new Date(a.last_login);
-              });
-              console.log("arr", arr); 
+            // arr.sort(function(a,b){
+            //     return new Date(b.last_login) - new Date(a.last_login);
+            //   });
+            //   console.log("arr", arr); 
 
           }).catch(error =>{
             console.log(error)
