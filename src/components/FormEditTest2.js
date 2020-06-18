@@ -190,6 +190,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
 const validationSchema= Yup.object({
     title:Yup.string().min(10, 'Too Short!').max(50, 'Too Long!').required('A title is required'),
     description:Yup.string().min(10, 'Too Short!').max(50, 'Too Long!').required('A description is required'),
@@ -219,6 +220,7 @@ function format1(value){
      return (year + "-" + month + "-" + day+" "+x);}
 
 function Form({ close, p_id, open }) {
+    const classes = useStyles();
     const [selDate, setselDate] = useState(null);
    
     const [error, seterror] = useState(false);

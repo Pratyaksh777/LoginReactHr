@@ -28,7 +28,7 @@ function Homepage() {
     // const [loghook, setloghook] = useState(false);
     const [viewList, setviewList] = useState(false);
     // const [upd, setupd] =useState(false)
-   
+    history.push("/Homepage")
     // if(upd==true){
     //     history.push("/Homepage")
     //     return <Redirect to={"/Update"} />

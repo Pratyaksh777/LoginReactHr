@@ -47,6 +47,7 @@ const styles = (theme) => ({
     root: {
         margin: 0,
         padding: theme.spacing(2),
+        
     },
     closeButton: {
         position: 'absolute',
@@ -73,6 +74,7 @@ const DialogTitle = withStyles(styles)((props) => {
 const DialogContent = withStyles((theme) => ({
     root: {
         padding: theme.spacing(2),
+       
     },
 }))(MuiDialogContent);
 
@@ -345,7 +347,7 @@ export const ShowSelected = (props) => {
                             {item.description} description 
                         </Typography>
                         <Typography className={classes.pos} color="textSecondary">
-                             Date :- {item.date_and_time.slice(0,10)}  time :- {item.date_and_time.slice(11,19)}  
+                             Date :- {moment(item.date_and_time).format("DD-MM-YYYY HH:mm").slice(0,10)}  time :- {moment(item.date_and_time).format("DD-MM-YYYY HH:mm").slice(0,10)}  
                         </Typography>
                         <Typography variant="body2" component="p">
                             {item.contact}

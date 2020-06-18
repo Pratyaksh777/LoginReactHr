@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import Message from './Message';
 import Progress from './Progress';
 import axios from 'axios';
@@ -11,6 +12,9 @@ import BackupIcon from '@material-ui/icons/Backup';
 import HomeIcon from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
 import { toast } from 'react-toastify';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
             {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
@@ -19,13 +23,24 @@ const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
             {name:'Home', url:"/Homepage", icon:<HomeIcon />}
 ]
 
-
+var tabdata;
 
 const FileUpload = () => {
+
+  // useEffect(() => {
+   
+  //   return () => {
+  //     console.log('cleanup')
+  //   }
+  // }, [vabool])
+
+  
+
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
-  // const [message, setMessage] = useState('');
+  const [msg, setmsg] = useState(false);
+  const [modOpen, setmodOpen] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const onChange = e => {
@@ -54,9 +69,9 @@ const FileUpload = () => {
           setTimeout(() => setUploadPercentage(0), 10000);
         }
       }).then(res => {
-        console.log(res)
+        // console.log(res.data)
         const { fileName, filePath } = res.data;
-
+        tabdata= res.data;
         setUploadedFile({ fileName, filePath });
         toast.success('File Uploaded successfully', {
           position: "top-right",
@@ -68,7 +83,8 @@ const FileUpload = () => {
           progress: undefined,
           });
         // setMessage('File Uploaded');
-       
+        // ReactDOM.render(res.data, document.getElementById("content") );
+        setmsg(true)
       })
 
      
@@ -98,10 +114,19 @@ const FileUpload = () => {
       }
     }
   };
-
+  // ReactDOM.render(<p>Hello</p>, document.getElementById("content") );
   return (
+    <div>
     <div style={{position: 'absolute', marginTop:'100px', marginLeft:'540px'}}>
       <PersistentDrawerLeft pages={rt} title="Resume Upload"/>
+      
+      <Modal isOpen={modOpen} onRequestClose={() => setmodOpen(false)}>
+        {msg ? null: <h1>Nothing to display. No file Uploaded</h1>}
+      <div id="content" dangerouslySetInnerHTML={{__html:tabdata}} ></div>
+      <div><Button variant="contained" color="secondary" onClick={() =>setmodOpen(false)} >
+        Close
+        </Button></div>
+      </Modal>
       {/* {message ? <Message msg={message} /> : null} */}
       <form onSubmit={onSubmit}>
         <div className='custom-file mb-4'>
@@ -131,7 +156,10 @@ const FileUpload = () => {
           </div>
         </div>
       ) : null}
-     
+     <br/><Button variant="contained"  onClick={() => setmodOpen(true)}>Parser Results</Button>
+    </div>
+    
+    
     </div>
   );
 };

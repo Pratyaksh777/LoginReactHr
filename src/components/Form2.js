@@ -73,7 +73,7 @@ const validationSchema= Yup.object({
   title:Yup.string().min(10, 'Too Short!').max(50, 'Too Long!').required('A title is required'),
   description:Yup.string().min(10, 'Too Short!').max(50, 'Too Long!').required('A description is required'),
   date_and_time:Yup.string().required('A date and time for interview is required')  ,
-  contact:Yup.string().length(10,"Please Enter a number").required('Contact No. is required'),//matches('^[0][1-9]\d{9}$|^[1-9]\d{9}$').
+  contact:Yup.string().matches('^[0-9]{10}$', "Enter a valid Phone no").required('Contact No. is required'),//matches('^[0][1-9]\d{9}$|^[1-9]\d{9}$').
   })
 
   var formik;
