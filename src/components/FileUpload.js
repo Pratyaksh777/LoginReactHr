@@ -10,7 +10,7 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import BackupIcon from '@material-ui/icons/Backup';
 import HomeIcon from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
-
+import { toast } from 'react-toastify';
 
 const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
             {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
@@ -25,7 +25,7 @@ const FileUpload = () => {
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
-  const [message, setMessage] = useState('');
+  // const [message, setMessage] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const onChange = e => {
@@ -53,18 +53,48 @@ const FileUpload = () => {
           // Clear percentage
           setTimeout(() => setUploadPercentage(0), 10000);
         }
-      });
+      }).then(res => {
+        console.log(res)
+        const { fileName, filePath } = res.data;
 
-      const { fileName, filePath } = res.data;
+        setUploadedFile({ fileName, filePath });
+        toast.success('File Uploaded successfully', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+        // setMessage('File Uploaded');
+       
+      })
 
-      setUploadedFile({ fileName, filePath });
-
-      setMessage('File Uploaded');
+     
     } catch (err) {
       if (err.response.status === 500) {
-        setMessage('There was a problem with the server');
+        // setMessage('There was a problem with the server');
+        toast.error('There was a problem with the server', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
       } else {
-        setMessage(err.response.data.msg);
+        toast.error(err.response.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+        // setMessage(err.response.data.msg);
       }
     }
   };
@@ -72,27 +102,26 @@ const FileUpload = () => {
   return (
     <div style={{position: 'absolute', marginTop:'100px', marginLeft:'540px'}}>
       <PersistentDrawerLeft pages={rt} title="Resume Upload"/>
-      {message ? <Message msg={message} /> : null}
+      {/* {message ? <Message msg={message} /> : null} */}
       <form onSubmit={onSubmit}>
         <div className='custom-file mb-4'>
-          <input
+       
+          <input 
             type='file'
             className='custom-file-input'
             id='resume'
             onChange={onChange}
-          />
-          <label className='custom-file-label' htmlFor='resume'>
-            {filename}
-          </label>
+           / > 
+          
         </div>
 
         <Progress percentage={uploadPercentage} />
-
-        <input
+        <br />
+        <Button variant="contained"
           type='submit'
           value='Upload'
           className='btn btn-primary btn-block mt-4'
-        />
+        >Upload</Button>
       </form>
       {uploadedFile ? (
         <div className='row mt-5'>
@@ -102,6 +131,7 @@ const FileUpload = () => {
           </div>
         </div>
       ) : null}
+     
     </div>
   );
 };

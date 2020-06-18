@@ -191,14 +191,14 @@ export const ShowAll = () => {
                 </Typography>
 
             </CardContent>
-            <CardActions>
-                <Button style={{float:'right'}} size="small" onClick={() => {
+            <CardActions style={{float:'right'}}>
+                <Button  size="small" onClick={() => {
                     console.log(data.id)
                     setE_id(data.id)
                     console.log("eid assigned is " + e_id)
                     handleClickOpen()
                 }}><EditIcon />&ensp;Edit</Button>
-                <Button style={{float:'right'}} size="small" onClick={() => delete_record(data.id)}><DeleteIcon />&ensp;Delete</Button>
+                <Button  size="small" onClick={() => delete_record(data.id)}><DeleteIcon />&ensp;Delete</Button>
             </CardActions>
         </Card>
 
@@ -398,14 +398,14 @@ export const ShowSelected = (props) => {
 
                         </Typography>
                     </CardContent>
-                    <CardActions>
-                        <Button style={{float:'right'}} size="small" onClick={() => {
+                    <CardActions style={{float:'right'}}>
+                        <Button  size="small" onClick={() => {
                             console.log(data.id)
                             setE_id(data.id)
                             console.log("eid assigned is " + e_id)
                             handleClickOpen()
                         }}><EditIcon />&ensp;Edit</Button>
-                        <Button style={{float:'right'}} size="small" onClick={() => delete_record(data.id)}><DeleteIcon />&ensp;Delete</Button>
+                        <Button  size="small" onClick={() => delete_record(data.id)}><DeleteIcon />&ensp;Delete</Button>
                     </CardActions>
                 </Card>
 

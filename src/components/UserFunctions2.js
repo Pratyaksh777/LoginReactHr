@@ -116,7 +116,8 @@ const [open, setOpen] = React.useState(false);
 
 
     useEffect(() => {
-        axios.get('/interviews').then(response => {
+        let source= axios.CancelToken.source();
+        axios.get('/interviews',{cancelToken:source.token}).then(response => {
             console.log("getting")
             console.log(response.data.data)
           obj = response.data.data;
@@ -137,6 +138,14 @@ const [open, setOpen] = React.useState(false);
         }).catch(error => {
             console.log(error)
         })
+
+        return () =>{
+            
+            console.log("Unmounting and cleanup");
+            source.cancel();
+          };
+  
+
  }, [])
  const delete_record = id => {
      console.log("id passed to delete is")
@@ -174,7 +183,7 @@ var v_id;
 
                         </Typography>
                     </CardContent>
-                    <CardActions>
+                    <CardActions style={{float:'right'}}>
                     <Button size="small" onClick={() => {
                         console.log("on click id is "+item.id)
                             console.log(item.id)
@@ -344,7 +353,7 @@ export const ShowSelected = (props) => {
 
                         </Typography>
                     </CardContent>
-                    <CardActions>
+                    <CardActions style={{float:'right'}}>
                     <Button size="small" onClick={() => {
                             console.log(item.id)
                             setE_id(item.id)

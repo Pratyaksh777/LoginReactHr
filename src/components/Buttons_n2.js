@@ -15,7 +15,20 @@ import '../App.css';
 import Form from './Form2'
 import { Formik } from 'formik'
 import TextField from '@material-ui/core/TextField';
+import PersistentDrawerLeft from "./PersistentDrawerLeft";
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
+import ViewListIcon from '@material-ui/icons/ViewList';
+import BackupIcon from '@material-ui/icons/Backup';
+import HomeIcon from '@material-ui/icons/Home';
+import UpdateIcon from '@material-ui/icons/Update';
 
+const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}
+]
 
 const styles = (theme) => ({
     root: {
@@ -107,9 +120,9 @@ export default function CustomizedDialogs() {
     }
 
     return (
-        <div>
+        <div style={{position:'absolute', marginTop:'40px', marginLeft:'270px', width:"800px"}}>
             {/* // choices of operations */}
-
+            <PersistentDrawerLeft pages={rt} title="Interview Section"/>
             <div className="App">
                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                     <Button onClick={() => {
