@@ -361,7 +361,7 @@ const onSubmit = values => {
                showYearDropdown scrollableMonthYearDropdown
                onChange={value =>{ formik.values.date_and_time =value
            }}
-               autoFocus/>
+              />
                  {formik.errors.date_and_time && formik.touched.date_and_time ? <div className="error">{formik.errors.date_and_time}</div>:null}
             
             </Grid>

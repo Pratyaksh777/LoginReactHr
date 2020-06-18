@@ -30,6 +30,7 @@ const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
             {name:'Home', url:"/Homepage", icon:<HomeIcon />}
 ]
 
+
 const styles = (theme) => ({
     root: {
         margin: 0,
@@ -69,7 +70,7 @@ const DialogActions = withStyles((theme) => ({
         padding: theme.spacing(1),
     },
 }))(MuiDialogActions);
-// var master_key=0;
+
 export default function CustomizedDialogs() {
     const [open, setOpen] = React.useState(false);
 
@@ -96,19 +97,18 @@ export default function CustomizedDialogs() {
     const [nameSelect, setNameSelect] = useState('')
 
 
-    // const disA = () => {
+    const disA = () => {
 
-    //     if (displayall)
-    //         return <ShowAll />
-    // }
+        if (displayall)
+            return <ShowAll />
+    }
 
-    // const disByName = () => {
-    //     console.log('in display function and nameselect = ' + nameSelect)
-        // if (displayByName){
-        // setDisplayByName(false);
-        //     return <ShowSelected title={nameSelect} />
-        // }
-    // }
+    const disByName = () => {
+        console.log('in display function and nameselect = ' + nameSelect)
+        if (displayByName)
+            return <ShowSelected title={nameSelect} />
+
+    }
 
     const submit = (values) => {
 
@@ -132,8 +132,6 @@ export default function CustomizedDialogs() {
                     <Button onClick={() => {
                         handleClickOpenS()
                         setDisplayall(false)
-                        document.getElementById("dispdiv").innerHTML="";
-                       
                     }}>Search</Button>
                     <Button onClick={handleClickOpen}>Add</Button>
                 </ButtonGroup>
@@ -146,9 +144,9 @@ export default function CustomizedDialogs() {
                 */}
 
 
-                <div id="dispdiv" align="center">
-                    {displayall ?  <ShowAll />:null}
-                    {displayByName ? <ShowSelected title={nameSelect} />: null }
+                <div align="center">
+                    {disA()}
+                    {disByName()}
 
                     {/* {displayall ? <ShowAll /> : disA()} */}
                     {/* // Showall is in UserFunctions.js */}
