@@ -18,11 +18,20 @@ import {useState} from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import history from '../history';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import GoogleSign from './GoogleSign';
+
+import SignUp from './Signup';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
+   
   },
   image: {
     backgroundImage: 'url("https://wallpaperplay.com/walls/full/5/0/5/89015.jpg")',
@@ -47,8 +56,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(1, 0, 2),
   },
+
+  
 }));
 
 const initialValues ={
@@ -72,8 +83,8 @@ export default function SignInSide() {
   const [isLogged, setisLogged] = useState(false);
   const[error, seterror] = useState(false)
   const [loghook, setloghook] = useState(false);
-
-    
+  const [modOpen, setmodOpen] = useState(false);
+ 
   
   const onSubmit= values =>{
     // console.log(values);
@@ -118,6 +129,18 @@ export default function SignInSide() {
   //console.log('Form vals', formik.values);
   if(isLogged==false){
   return (
+    <>
+    <Dialog open={modOpen} onClose={() => setmodOpen(false)} >
+    <DialogContent>
+    <div>
+                  <Button variant="contained" color="secondary" onClick={() =>setmodOpen(false)} >
+                  Close
+                  </Button>
+                  <SignUp />
+                  </div>
+                  <div className="g-signin2" data-onsuccess="onSignIn" data-scope="https://www.googleapis.com/auth/user.birthday.read"></div>
+      </DialogContent>
+    </Dialog>
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -165,10 +188,6 @@ export default function SignInSide() {
             {formik.errors.password && formik.touched.password ? <div className="error">{formik.errors.password}</div>:null}
             </div>
             
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -178,16 +197,20 @@ export default function SignInSide() {
             >
               Sign In
             </Button>
+            <p>OR</p>
             <Grid container>
               <Grid item xs>
-                {/* <Link href="#" variant="body2"> */}
-                  Forgot password?
-                {/* </Link> */}
+              
+                  <div className="g-signin2" data-onsuccess="onSignIn" data-scope="https://www.googleapis.com/auth/user.birthday.read"></div>
+              
+                <GoogleSign />
               </Grid>
               <Grid item>
-                <Link to="/Signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                {/* <Button variant="contained" onClick={() => setmodOpen(true)}>Sign Up</Button> */}
+                <Link to="/Signup" >
+                Already have an account? Sign in
+              </Link>
+                
               </Grid>
             </Grid>
             <Box mt={5}>
@@ -198,6 +221,7 @@ export default function SignInSide() {
         </div>
       </Grid>
     </Grid>
+    </>
   );
   }
   else{

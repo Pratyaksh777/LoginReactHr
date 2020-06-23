@@ -1,6 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    <script src="https://apis.google.com/js/api:client.js" ></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script type="text/javaScript">
+    
+    function onSignIn(googleUser) {
+      // console.log("Hello")
+      // var id_token = googleUser.getAuthResponse().id_token;
+      // var xhr = new XMLHttpRequest();
+      // xhr.open('POST', '/googlesign', false);
+      // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      // xhr.onload = function() {
+      //   // console.log('Signed in as: ' + xhr.responseText);
+      //   if(xhr.responseText.success==="True"){
+      //     // sessionStorage.setItem('userData',xhr.responseText.person);
+      //     // sessionStorage.setItem('Google', "True"); 
+      //     // window.location.replace("http://localhost:3000/Homepage");
+      //   }
+      // };
+      // xhr.send('idToken=' + id_token);
+      var fg  =gapi.auth2.getAuthInstance()
+      console.log(fg.isSignedIn.get())
+      loadClient();
+      
+
+    }
+      
+    function authenticate() {
+    return gapi.auth2.getAuthInstance()
+        .signIn({scope: "https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"})
+        .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+  }
+  function loadClient() {
+    gapi.client.setApiKey("AIzaSyBBkJllROH4170MachQsGF0yht_qWrUaZI");
+    return gapi.client.load("https://people.googleapis.com/$discovery/rest?version=v1")
+        .then(function() { console.log("GAPI client loaded for API"); 
+        execute();},
+              function(err) { console.error("Error loading GAPI client for API", err); });
+  }
+  // Make sure the client is loaded and sign-in is complete before calling this method.
+  function execute() {
+    return gapi.client.people.people.get({
+      "resourceName": "people/me",
+      "personFields": "birthdays"
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+  }
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "51527806993-p7adkqpbc3ufg2dum8gimhf0bt396k2h.apps.googleusercontent.com"});
+  });
+
+
+
+
+      var auth2; // The Sign-In object.
+    var googleUser; // The current user.
+
+
+
+//  function init() {
+//    console.log("GB")
+//   gapi.load('auth2', function() {
+//     auth2 = gapi.auth2.init({
+//       client_id: '51527806993-p7adkqpbc3ufg2dum8gimhf0bt396k2h.apps.googleusercontent.com',
+//       /* Ready. Make a call to gapi.auth2.init or some other API */
+//   });
+//   if (auth2.isSignedIn.get() == true) {
+    
+//      auth2.signIn();
+//      return onSignIn(auth2.currentUser.get())
+    
+//   }
+  
+//   });
+
+// };
+
+
+function onSignUp(googleUser) {
+      console.log("Hello")
+      var id_token = googleUser.getAuthResponse().id_token;
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/googleup', false);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function() {
+        console.log('Signed in as: ' + xhr.responseText);
+        if(xhr.responseText.success==="True"){
+          sessionStorage.setItem('userData',xhr.responseText.Person);
+          sessionStorage.setItem('Google', "True"); 
+          window.location.replace("http://localhost:3000/Homepage");
+        }
+      };
+      xhr.send('idToken=' + id_token);
+     
+      }
+
+
+
+
+    </script>
+    <style type="text/css">
+      #customBtn {
+        display: inline-block;
+        background: white;
+        color: #444;
+        width: 190px;
+        border-radius: 5px;
+        border: thin solid #888;
+        box-shadow: 1px 1px 1px grey;
+        white-space: nowrap;
+      }
+      #customBtn:hover {
+        cursor: pointer;
+      }
+      span.label {
+        font-family: serif;
+        font-weight: normal;
+      }
+      span.icon {
+        background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+        display: inline-block;
+        vertical-align: middle;
+        width: 42px;
+        height: 42px;
+      }
+      span.buttonText {
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 42px;
+        padding-right: 42px;
+        font-size: 14px;
+        font-weight: bold;
+        /* Use the Roboto font that is loaded in the <head> */
+        font-family: 'Roboto', sans-serif;
+      }
+    </style>
+
+
+    <meta name="google-signin-client_id" 
+    content="51527806993-p7adkqpbc3ufg2dum8gimhf0bt396k2h.apps.googleusercontent.com" />
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,6 +174,7 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

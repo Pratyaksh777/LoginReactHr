@@ -23,6 +23,13 @@ import 'react-toastify/dist/ReactToastify.css';
 var moment = require('moment'); // require
 moment().format(); 
 
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
 
 
 const useStyles = makeStyles((theme) => ({
@@ -139,7 +146,7 @@ export default function SignUp() {
   })
   
   if(sign==true){
-    return <Redirect to={"/"} />
+    // return <Redirect to={"/"} />
   }
   if(sessionStorage.getItem("userData")){
     setsign(true);
@@ -148,6 +155,7 @@ export default function SignUp() {
 
   return (
     <Container component="main" maxWidth="xs">
+       
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -246,12 +254,12 @@ export default function SignUp() {
               />
               {formik.errors.Cpassword && formik.touched.Cpassword ? <div className="error">{formik.errors.Cpassword}</div>:null}
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Button
             type="submit"
@@ -262,11 +270,14 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
+          <br />
+          
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/" >
                 Already have an account? Sign in
               </Link>
+              {/* <div className="g-signin2" data-onsuccess="onSignIn" data-scope="https://www.googleapis.com/auth/user.birthday.read"></div> */}
             </Grid>
           </Grid>
         </form>
