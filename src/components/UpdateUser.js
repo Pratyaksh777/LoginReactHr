@@ -20,9 +20,27 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { red } from '@material-ui/core/colors';
 import history from '../history';
+import LoadingOverlay from 'react-loading-overlay';
+import UpdateIcon from '@material-ui/icons/Update';
+import PersistentDrawerLeft from "./PersistentDrawerLeft";
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
+import ViewListIcon from '@material-ui/icons/ViewList';
+import BackupIcon from '@material-ui/icons/Backup';
+import HomeIcon from '@material-ui/icons/Home';
+
 
 var moment = require('moment'); // require
 moment().format(); 
+
+
+const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}
+]
+
 
 toast.configure()
 const useStyles = makeStyles((theme) => ({
@@ -138,6 +156,7 @@ export default function UpdateUser() {
   const [loghook, setloghook] = useState(false);
   const [load, setload] =useState(false)
   const [back, setback] =useState(false)
+  var social = false;
   
   const onSubmit = values => {
     console.log(formik.values)
@@ -193,6 +212,9 @@ export default function UpdateUser() {
     if(sessionStorage.getItem("userData")){
         // const item = sessionStorage.getItem("userData");
         x = sessionStorage.userData;
+        if(sessionStorage.getItem("Social")){
+          social = true;
+        }
         // console.log(item)
     }
     else{
@@ -203,11 +225,18 @@ export default function UpdateUser() {
       
       return <Redirect to={"/Homepage"} />
     }
-    const fnameError = () => toast("First Name");
+    
    
 
   return (
-    <div>{load ? 
+    <div>
+      <PersistentDrawerLeft pages={rt} title="Update Profile"/>
+      <LoadingOverlay
+        active={!load}
+        spinner
+        text='Loading Profile...'
+        >
+      {load ? 
     <Container component="main" maxWidth="xs">
       
       <CssBaseline />
@@ -260,7 +289,7 @@ export default function UpdateUser() {
                 autoComplete="email"
                 defaultValue={formik.values.email}
                 onChange={event => formik.values.email=event.target.value}
-
+                disabled
               />
               {formik.errors.email && formik.touched.email ? <div className="error">{formik.errors.email}</div>:null}
             </Grid>
@@ -288,6 +317,7 @@ export default function UpdateUser() {
                 label="New Password"
                 type="password"
                 id="Newpassword"
+                disabled={social}
                 autoComplete="current-password"
                 onChange={(event) => {
                   formik.values.Newpassword=event.target.value
@@ -306,6 +336,7 @@ export default function UpdateUser() {
                 label="Confirm Password"
                 type="password"
                 id="Cpassword"
+                disabled={social}
                 autoComplete="current-password"
                 onChange={event => formik.values.Cpassword=event.target.value}
                 defaultValue = {formik.values.Cpassword}
@@ -335,7 +366,7 @@ export default function UpdateUser() {
       <br/>
       <LogOut />
     </Container> :<LogOut />}
-    
+    </LoadingOverlay>
     </div>
   );
 

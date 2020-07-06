@@ -89,7 +89,7 @@ const DialogActions = withStyles((theme) => ({
 
 
 
-export const ShowAll = () => {
+export const ShowAll = (props) => {
 
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
@@ -162,7 +162,12 @@ const [open, setOpen] = React.useState(false);
 
 const [tenp_id,setTemp_id]=useState(0)
 var v_id;
-
+const ida=parseInt(sessionStorage.Roleid)
+console.log('This is the value of roleid in userfunction'+sessionStorage.Roleid)
+//parseInt(role)
+const display=(item)=>
+{if(ida!=0)
+{return( <Button size="small" onClick={() => delete_record(item.id)}><DeleteIcon />&ensp;Delete</Button>   )}}
 
 
 
@@ -195,7 +200,8 @@ var v_id;
                             console.log("value assigned to varialbe is "+v_id)
                             handleClickOpen(item.id)
                         }}><EditIcon />&ensp;Edit</Button>
-                        <Button size="small" onClick={() => delete_record(item.id)}><DeleteIcon />&ensp;Delete</Button>
+                        {display()}
+                        {/* <Button size="small" onClick={() => delete_record(item.id)}><DeleteIcon />&ensp;Delete</Button>  */}
                     </CardActions>
                 </Card>
  
@@ -334,7 +340,21 @@ export const ShowSelected = (props) => {
         })
         window.location.reload();
     }
+
     
+
+    // var arr=[JSON.stringify(props.location.state)]
+// var role=arr.toString().slice(6,7)
+// console.log('The value in arr is'+arr)
+// console.log('The value in role by array is'+role)
+// console.log("the value passed to home is "+JSON.stringify(props.location.state))
+const ida=parseInt(sessionStorage.Roleid)
+//parseInt(role)
+const display=(item)=>
+{if(ida!=0)
+{return( <Button size="small" onClick={() => delete_record(item.id)}><DeleteIcon />&ensp;Delete</Button>   )}}
+
+
         
             const List=data.map((item) =>
                 <Card className={classes.root} variant="outlined" key={item.id}>
@@ -362,7 +382,8 @@ export const ShowSelected = (props) => {
                             console.log("eid assigned is " + e_id)
                             handleClickOpen()
                         }}><EditIcon />&ensp;Edit</Button>
-                        <Button size="small" onClick={() => delete_record(item.id)}><DeleteIcon />&ensp;Delete</Button>
+                        {display()}
+                        {/* <Button size="small" onClick={() => delete_record(item.id)}><DeleteIcon />&ensp;Delete</Button> */}
                     </CardActions>
                 </Card>
  )

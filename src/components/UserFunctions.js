@@ -154,7 +154,12 @@ export const ShowAll = () => {
     }
 
 
-
+    const ida=parseInt(sessionStorage.Roleid)
+    //parseInt(role)
+    const display=(item)=>
+    {if(ida!=0)
+    {return( <Button size="small" onClick={() => delete_record(item.id)}><DeleteIcon />&ensp;Delete</Button>   )}}
+    
 
 
     const List = data.map(data =>
@@ -198,7 +203,8 @@ export const ShowAll = () => {
                     console.log("eid assigned is " + e_id)
                     handleClickOpen()
                 }}><EditIcon />&ensp;Edit</Button>
-                <Button  size="small" onClick={() => delete_record(data.id)}><DeleteIcon />&ensp;Delete</Button>
+                {display()}
+                {/* <Button  size="small" onClick={() => delete_record(data.id)}><DeleteIcon />&ensp;Delete</Button> */}
             </CardActions>
         </Card>
 
@@ -360,7 +366,12 @@ export const ShowSelected = (props) => {
 
 
 
-
+    const ida=parseInt(sessionStorage.Roleid)
+    //parseInt(role)
+    const display=(item)=>
+    {if(ida!=0)
+    {return( <Button size="small" onClick={() => delete_record(item.id)}><DeleteIcon />&ensp;Delete</Button>   )}}
+    
 
 
     return (
@@ -405,7 +416,8 @@ export const ShowSelected = (props) => {
                             console.log("eid assigned is " + e_id)
                             handleClickOpen()
                         }}><EditIcon />&ensp;Edit</Button>
-                        <Button  size="small" onClick={() => delete_record(data.id)}><DeleteIcon />&ensp;Delete</Button>
+                        {display()}
+                        {/* <Button  size="small" onClick={() => delete_record(data.id)}><DeleteIcon />&ensp;Delete</Button> */}
                     </CardActions>
                 </Card>
 

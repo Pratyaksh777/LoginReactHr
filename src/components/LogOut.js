@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
-
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+const CLIENT_ID = '51527806993-p7adkqpbc3ufg2dum8gimhf0bt396k2h.apps.googleusercontent.com';
+var soc="";
 function lastTime(){
     axios.post("/timeupdate/"+sessionStorage.userData, null).then(response =>{
         // console.log(response)
@@ -19,6 +21,9 @@ function LogOut() {
         return <Redirect to={"/"} />
     }
     if(sessionStorage.getItem("userData")){
+        if(sessionStorage.getItem("Social")){
+            soc="Google";
+        }
         console.log(sessionStorage.userData.toString())
     }
     else{
@@ -27,11 +32,21 @@ function LogOut() {
     }
     return (
         <div>
+            {soc=="Google" ? <GoogleLogout
+             clientId={ CLIENT_ID }
+             buttonText='Logout'
+             onLogoutSuccess={ ()=>{ 
+                lastTime();
+                sessionStorage.clear();
+                 setloghook(true); 
+             } }
+            ></GoogleLogout>:  
             <Button  variant="outlined" color="secondary"  onClick={()=>{
                 lastTime();
                 sessionStorage.clear();
                  setloghook(true); 
-                }}>Log out</Button><br />
+                }}>Log out</Button> }
+           
         </div>
     )
 }

@@ -14,7 +14,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../App.css';
 import axios from 'axios'
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import history from '../history';
@@ -24,10 +24,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import GoogleSign from './GoogleSign';
-
+import GSignup from './GSignup';
 import SignUp from './Signup';
+import LoadingOverlay from 'react-loading-overlay';
+import Gtest from './Gtest';
 
-
+var flag=false;
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
@@ -68,6 +70,9 @@ const initialValues ={
     
 }
 
+function redirectx(){
+  window.location.replace("http://localhost:3000/Gtest");
+}
 
 
 const validationSchema  = Yup.object({
@@ -75,13 +80,22 @@ const validationSchema  = Yup.object({
     password:Yup.string().required("Required")
 })
 
-export default function SignInSide() {
+export default function SignInSide(props) {
+
+  useEffect(() => {
+    const params = new URLSearchParams(props.location.search)
+    if(params.get('error')){
+      seterror({errorval:true, loading:false})
+    }
+    return () => {
+      console.log("Unmounting")
+    }
+  }, [])
 
   
-
   const classes = useStyles();
   const [isLogged, setisLogged] = useState(false);
-  const[error, seterror] = useState(false)
+  const[error, seterror] = useState({errorval:false, loading:false})
   const [loghook, setloghook] = useState(false);
   const [modOpen, setmodOpen] = useState(false);
  
@@ -96,12 +110,12 @@ export default function SignInSide() {
           setisLogged(true)          
         }
         else{
-          seterror(true)
+          seterror({errorval:true, loading:false})
         }
         
          //console.log(response);
      }).catch(error =>{
-        seterror(true)
+      seterror({errorval:true, loading:false})
          console.log(error);
      });
      
@@ -126,20 +140,34 @@ export default function SignInSide() {
       
         console.log("ok")
     }
-  //console.log('Form vals', formik.values);
+  
+    const handleClose = () =>{
+      seterror({errorval:false, loading:false})
+    }
+
   if(isLogged==false){
   return (
     <>
-    <Dialog open={modOpen} onClose={() => setmodOpen(false)} >
-    <DialogContent>
+    <LoadingOverlay
+        active={error.loading}
+        spinner
+        text='Please wait...'
+        >
+    <Dialog open={modOpen} onClose={() => {setmodOpen(false); }} >
+    
+    <DialogContent>      
     <div>
                   <Button variant="contained" color="secondary" onClick={() =>setmodOpen(false)} >
                   Close
                   </Button>
-                  <SignUp />
+                  <Gtest erf={seterror} modf={setmodOpen} />
+                  {/* <SignUp /> */}
                   </div>
-                  <div className="g-signin2" data-onsuccess="onSignIn" data-scope="https://www.googleapis.com/auth/user.birthday.read"></div>
+                  {/* <Gtest erf={seterror} modf={setmodOpen} /> */}
+                 {/* <GSignup erf={seterror} modf={setmodOpen}/> */}
+                 
       </DialogContent>
+      
     </Dialog>
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -150,7 +178,7 @@ export default function SignInSide() {
             
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Log in
           </Typography>
           <form className={classes.form} onSubmit={formik.handleSubmit}>
             <div className="form-control">
@@ -197,30 +225,33 @@ export default function SignInSide() {
             >
               Sign In
             </Button>
+            <br />
+            <Button  color="primary" onClick={() =>redirectx()}>Don't have and account? Sign Up!</Button>
             <p>OR</p>
             <Grid container>
               <Grid item xs>
               
-                  <div className="g-signin2" data-onsuccess="onSignIn" data-scope="https://www.googleapis.com/auth/user.birthday.read"></div>
+                  {/* <div className="g-signin2" data-onsuccess="onSignIn" data-scope="https://www.googleapis.com/auth/user.birthday.read"></div> */}
               
-                <GoogleSign />
+                <GoogleSign erf={seterror} />
               </Grid>
               <Grid item>
-                {/* <Button variant="contained" onClick={() => setmodOpen(true)}>Sign Up</Button> */}
-                <Link to="/Signup" >
-                Already have an account? Sign in
-              </Link>
+               
+                {/* <Link to="/Gtest" >
+                Don't have an account?Sign up
+              </Link> */}
                 
               </Grid>
             </Grid>
             <Box mt={5}>
               
             </Box>
-           { error ?  <Alert severity="error" onClick={() => seterror(false)}>Invalid Credentials or Account no longer exists</Alert>:null}
+           { error.errorval ?  <Alert severity="error" onClick={() => seterror(false)}>Invalid Credentials or Account Doesn't exists</Alert>:null}
           </form>
         </div>
       </Grid>
     </Grid>
+    </LoadingOverlay>
     </>
   );
   }

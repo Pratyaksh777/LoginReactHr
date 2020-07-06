@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -23,11 +22,11 @@ import BackupIcon from '@material-ui/icons/Backup';
 import HomeIcon from '@material-ui/icons/Home';
 import UpdateIcon from '@material-ui/icons/Update';
 
-const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
-            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
-            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
-            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
-            {name:'Home', url:"/Homepage", icon:<HomeIcon />}
+const rt = [{ name: "Update", url: "/Update", icon: <UpdateIcon /> },
+{ name: "Opportunity", url: "/Iview", icon: <LabelImportantIcon /> },
+{ name: "Interview", url: "/Interv", icon: <PersonAddIcon /> },
+{ name: 'Upload Resume', url: "/FileUpload", icon: <BackupIcon /> },
+{ name: 'Home', url: "/Homepage", icon: <HomeIcon /> }
 ]
 
 
@@ -90,7 +89,7 @@ export default function CustomizedDialogs() {
         setSopen(false);
     }
 
-    const [displayall, setDisplayall] = useState(false);
+    const [displayall, setDisplayall] = useState(true);
     const [displayByName, setDisplayByName] = useState(false);
 
 
@@ -119,22 +118,49 @@ export default function CustomizedDialogs() {
         setDisplayByName(true);
     }
 
-    return (
-        <div style={{position:'absolute', marginTop:'40px', marginLeft:'270px', width:"800px"}}>
+
+
+    const submit2 = (values) => {
+
+        console.log("in submit")
+        setNameSelect(values.names)
+        console.log(nameSelect);
+        setDisplayall(false)
+        setDisplayByName(true);
+    }
+
+    return (<div>
+        <div style={{ position: 'absolute', marginTop: '40px', marginLeft: '400px', width: "800px", }}>
             {/* // choices of operations */}
-            <PersistentDrawerLeft pages={rt} title="Interview Section"/>
-            <div className="App">
-                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button onClick={() => {
-                        setDisplayall(true)
-                        setDisplayByName(false)
-                    }}>Show all</Button>
-                    <Button onClick={() => {
-                        handleClickOpenS()
-                        setDisplayall(false)
-                    }}>Search</Button>
-                    <Button onClick={handleClickOpen}>Add</Button>
-                </ButtonGroup>
+            <PersistentDrawerLeft pages={rt} title="Interview Section" />
+            <div align="right">
+                <Formik initialValues={{ names: '' }} onSubmit={submit2}>
+                    {(formik) => (
+                        <form onSubmit={formik.handleSubmit}>
+                            <TextField
+                                value={formik.values.names}
+                                required
+                                name="names"
+                                id="names"
+                                label="title"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur} />
+
+                            <Button padding='10' type="submit" variant="contained" color="primary">Search</Button>
+                        </form>
+                    )}
+                </Formik>
+            </div>
+
+            <div >
+
+
+
+
+
+                <Button variant="contained" color="primary" onClick={handleClickOpen}>Add</Button>
+
+
             </div>
 
             <div className="App">
@@ -157,40 +183,7 @@ export default function CustomizedDialogs() {
             </div>
 
 
-            <div>
-                <Dialog fullWidth={true} maxWidth='lg' onClose={handleCloseS} aria-labelledby="customized-dialog-title" open={sopen}>
-                    <DialogTitle id="customized-dialog-title" onClose={handleCloseS}>
-                        Enter title
-        </DialogTitle>
-                    <DialogContent dividers>
 
-
-                        <Formik initialValues={{ names: '' }} onSubmit={submit}>
-                            {(formik) => (
-                                <form onSubmit={formik.handleSubmit}>
-                                    <TextField
-                                        value={formik.values.names}
-                                        required
-                                        name="names"
-                                        id="names"
-                                        label="title"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur} />
-
-                                    <Button padding='10' type="submit" variant="contained" color="primary">submit</Button>
-                                </form>
-                            )}
-                        </Formik>
-
-
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleCloseS} color="primary">
-                            close
-          </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
 
 
 
@@ -212,5 +205,6 @@ export default function CustomizedDialogs() {
                 </DialogActions>
             </Dialog>
         </div>
+    </div>
     );
 }

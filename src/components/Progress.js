@@ -6,8 +6,8 @@ import Box from '@material-ui/core/Box';
 
 function LinearProgressWithLabel(props) {
   return (
-    <Box display="flex" alignItems="center">
-      <Box width="100%" mr={1}>
+    <Box display="flex" alignItems="center" marginLeft="200px">
+      <Box width="80%" mr={1}>
         <LinearProgress variant="determinate" {...props} />
       </Box>
       <Box minWidth={35}>

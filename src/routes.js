@@ -11,6 +11,8 @@ import App from "./App.js"
 import history from './history';
 import Interv from "./components/Interv";
 import FileUpload from './components/FileUpload';
+import GSignup from './components/GSignup';
+import Gtest from './components/Gtest';
 
 const Routes = () => (
     <BrowserRouter history={history}>
@@ -24,6 +26,8 @@ const Routes = () => (
         <Route path="/Iview" component={Iview} />
         <Route path="/Interv" component={Interv} />
         <Route path="/FileUpload" component={FileUpload} />
+        <Route path="/GSignup" component={GSignup} />
+        <Route path="/Gtest" component={Gtest} />
         <Route path="/LogOut" component={LogOut} />
     </Switch>
     </BrowserRouter>

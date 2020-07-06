@@ -13,35 +13,47 @@ import HomeIcon from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
+import Dialog from '@material-ui/core/Dialog';
+import {UserProfile} from './ProfilePages/UserProfile';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 Modal.setAppElement('#root');
 
-const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+const rt = [{name:'Home', url:"/Homepage", icon:<HomeIcon />},
+            {name:"Update", url:"/Update", icon:<UpdateIcon />},
             {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
             {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
-            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
-            {name:'Home', url:"/Homepage", icon:<HomeIcon />}
-]
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />}]
 
 var tabdata;
 
+const useStyles = makeStyles(theme => ({
+  marginAutoContainer: {
+    width: 500,
+    height: 80,
+    display: 'flex',
+  },
+  marginAutoItem: {
+    margin: 'auto'
+  },
+  alignItemsAndJustifyContent: {
+    width: 500,
+    height: 80,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+}))
+
 const FileUpload = () => {
-
-  // useEffect(() => {
-   
-  //   return () => {
-  //     console.log('cleanup')
-  //   }
-  // }, [vabool])
-
-  
-
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
   const [msg, setmsg] = useState(false);
   const [modOpen, setmodOpen] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const onChange = e => {
     setFile(e.target.files[0]);
@@ -114,10 +126,17 @@ const FileUpload = () => {
       }
     }
   };
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
   // ReactDOM.render(<p>Hello</p>, document.getElementById("content") );
   return (
     <div>
-    <div style={{position: 'absolute', marginTop:'100px', marginLeft:'540px'}}>
+    <div style={{position: 'center', marginTop:'110px'}}>
       <PersistentDrawerLeft pages={rt} title="Resume Upload"/>
       
       <Modal isOpen={modOpen} onRequestClose={() => setmodOpen(false)}>
@@ -136,15 +155,20 @@ const FileUpload = () => {
             className='custom-file-input'
             id='resume'
             onChange={onChange}
-           / > 
+           /> 
           
         </div>
-
+        <br></br>
+        <br></br>
+        
         <Progress percentage={uploadPercentage} />
+        
+        
         <br />
         <Button variant="contained"
           type='submit'
           value='Upload'
+          color='primary'
           className='btn btn-primary btn-block mt-4'
         >Upload</Button>
       </form>
@@ -152,13 +176,22 @@ const FileUpload = () => {
         <div className='row mt-5'>
           <div className='col-md-6 m-auto'>
             <h3 className='text-center'>{uploadedFile.fileName}</h3>
-            <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
+            <img  style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
           </div>
         </div>
       ) : null}
-     <br/><Button variant="contained"  onClick={() => setmodOpen(true)}>Parser Results</Button>
+     <br/><Button variant="contained" color='primary' onClick={() => setmodOpen(true)}>Parser Results</Button>
     </div>
-    
+    <br/>
+    <div style={{position: 'center', marginTop:'170px'}}>
+      <h3>INCASE YOU DON'T HAVE A RESUME CLICK ON "ENTER DETAILS"</h3>
+      <Button variant="contained" color='primary' onClick={handleDialogOpen}>Enter Details</Button>
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+         <div style={{backgroundColor: 'white'}}>
+          <UserProfile closeHandler={handleDialogClose}/>
+        </div> 
+      </Dialog>
+    </div>
     
     </div>
   );
