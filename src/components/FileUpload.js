@@ -20,11 +20,162 @@ import { makeStyles } from '@material-ui/core/styles';
 
 Modal.setAppElement('#root');
 
-const rt = [{name:'Home', url:"/Homepage", icon:<HomeIcon />},
-            {name:"Update", url:"/Update", icon:<UpdateIcon />},
-            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
-            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
-            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />}]
+function Display1(A,B,C,D) {
+  if(A==0 && B==0 && C==0 && D==0)
+  {
+      const rt = [
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+          return rt
+      }
+  
+
+else if(A==0 && B==0 && C==0 && D==1)
+  {
+    const rt = [
+          {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+          return rt}
+  
+
+else if(A==0 && B==0 && C==1 && D==0)
+  {
+      const rt = [
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+           {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+           return rt}
+  
+
+else if(A==0 && B==0 && C==1 && D==1)
+  {
+     const rt = [
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+          {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+          return rt }
+  
+
+else if(A==0 && B==1 && C==0 && D==0)
+  {
+     const rt = [
+          {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+
+else if(A==0 && B==1 && C==0 && D==1)
+  {
+     const rt = [
+          {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+         
+          {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+  
+          return rt}
+  
+
+else if(A==0 && B==1 && C==1 && D==0)
+  {
+       const rt = [
+          {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+  
+
+
+else if(A==0 && B==1 && C==1 && D==1)
+  {
+      const rt = [
+          {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+          {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+ 
+else if(A==1 && B==0 && C==0 && D==0)
+  {
+      const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+  
+else if(A==1 && B==0 && C==0 && D==1)
+  {
+      const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+          {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+
+else if(A==1 && B==0 && C==1 && D==0)
+  {
+      const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+
+else if(A==1 && B==0 && C==1 && D==1)
+  {
+      const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+          {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+
+else if(A==1 && B==1 && C==0 && D==0)
+  {
+     const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+          {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+
+          return rt  }
+
+else if(A==1 && B==1 && C==0 && D==1)
+  {
+      const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+          {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+
+else if(A==1 && B==1 && C==1 && D==0)
+  {
+      const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+          {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+ 
+          return rt }
+ 
+else if(A==1 && B==1 && C==1 && D==1)
+  {
+     const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+          {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+          {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+          {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+          {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+  
+          return rt}
+else
+{
+   return []
+}           
+          
+  
+}
+
+
+
+// const rt = [{name:'Home', url:"/Homepage", icon:<HomeIcon />},
+//             {name:"Update", url:"/Update", icon:<UpdateIcon />},
+//             {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+//             {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+//             {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />}]
 
 var tabdata;
 
@@ -46,6 +197,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+var x;
+// x = sessionStorage.userData;
 const FileUpload = () => {
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
@@ -54,6 +207,17 @@ const FileUpload = () => {
   const [modOpen, setmodOpen] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const A=parseInt(sessionStorage.A)
+  const B=parseInt(sessionStorage.B)
+  const C=parseInt(sessionStorage.C)
+  const D=parseInt(sessionStorage.D)
+  
+  useEffect(()=>{
+    if(sessionStorage.getItem("userData")){
+      x = sessionStorage.userData;
+    }
+    // console.log(x)
+  })
 
   const onChange = e => {
     setFile(e.target.files[0]);
@@ -64,6 +228,8 @@ const FileUpload = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('resume', file, filename);
+    formData.append('interviewee_id', x);
+    // console.log({filename})
     const url = 'http://localhost:8000/';
     try {
       const res = await axios.post(url, formData, {
@@ -137,7 +303,7 @@ const FileUpload = () => {
   return (
     <div>
     <div style={{position: 'center', marginTop:'110px'}}>
-      <PersistentDrawerLeft pages={rt} title="Resume Upload"/>
+    <PersistentDrawerLeft pages={Display1(A,B,C,D)} title="Resume Upload" />
       
       <Modal isOpen={modOpen} onRequestClose={() => setmodOpen(false)}>
         {msg ? null: <h1>Nothing to display. No file Uploaded</h1>}
@@ -180,13 +346,13 @@ const FileUpload = () => {
           </div>
         </div>
       ) : null}
-     <br/><Button variant="contained" color='primary' onClick={() => setmodOpen(true)}>Parser Results</Button>
+     {/* <br/><Button variant="contained" color='primary' onClick={() => setmodOpen(true)}>Parser Results</Button> */}
     </div>
     <br/>
-    <div style={{position: 'center', marginTop:'170px'}}>
+    <div style={{position: 'center', marginTop:'30px'}}>
       <h3>INCASE YOU DON'T HAVE A RESUME CLICK ON "ENTER DETAILS"</h3>
       <Button variant="contained" color='primary' onClick={handleDialogOpen}>Enter Details</Button>
-      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+      <Dialog open={dialogOpen} onRequestClose={handleDialogClose}>
          <div style={{backgroundColor: 'white'}}>
           <UserProfile closeHandler={handleDialogClose}/>
         </div> 

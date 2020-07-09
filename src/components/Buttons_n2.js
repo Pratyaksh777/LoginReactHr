@@ -21,14 +21,155 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import BackupIcon from '@material-ui/icons/Backup';
 import HomeIcon from '@material-ui/icons/Home';
 import UpdateIcon from '@material-ui/icons/Update';
-
-const rt = [{ name: "Update", url: "/Update", icon: <UpdateIcon /> },
-{ name: "Opportunity", url: "/Iview", icon: <LabelImportantIcon /> },
-{ name: "Interview", url: "/Interv", icon: <PersonAddIcon /> },
-{ name: 'Upload Resume', url: "/FileUpload", icon: <BackupIcon /> },
-{ name: 'Home', url: "/Homepage", icon: <HomeIcon /> }
-]
-
+function Display1(A,B,C,D) {
+    if(A==0 && B==0 && C==0 && D==0)
+    {
+        const rt = [
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+            return rt
+        }
+    
+  
+  else if(A==0 && B==0 && C==0 && D==1)
+    {
+      const rt = [
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+            return rt}
+    
+  
+  else if(A==0 && B==0 && C==1 && D==0)
+    {
+        const rt = [
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+             {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+             return rt}
+    
+  
+  else if(A==0 && B==0 && C==1 && D==1)
+    {
+       const rt = [
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+            return rt }
+    
+  
+  else if(A==0 && B==1 && C==0 && D==0)
+    {
+       const rt = [
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+  
+  else if(A==0 && B==1 && C==0 && D==1)
+    {
+       const rt = [
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+           
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+    
+            return rt}
+    
+  
+  else if(A==0 && B==1 && C==1 && D==0)
+    {
+         const rt = [
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+    
+  
+  
+  else if(A==0 && B==1 && C==1 && D==1)
+    {
+        const rt = [
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+   
+  else if(A==1 && B==0 && C==0 && D==0)
+    {
+        const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+    
+  else if(A==1 && B==0 && C==0 && D==1)
+    {
+        const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+  
+  else if(A==1 && B==0 && C==1 && D==0)
+    {
+        const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+  
+  else if(A==1 && B==0 && C==1 && D==1)
+    {
+        const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+  
+  else if(A==1 && B==1 && C==0 && D==0)
+    {
+       const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+  
+            return rt  }
+  
+  else if(A==1 && B==1 && C==0 && D==1)
+    {
+        const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+  
+  else if(A==1 && B==1 && C==1 && D==0)
+    {
+        const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+   
+            return rt }
+   
+  else if(A==1 && B==1 && C==1 && D==1)
+    {
+       const rt = [{name:"Update", url:"/Update", icon:<UpdateIcon />},
+            {name:"Opportunity", url:"/Iview",icon:<LabelImportantIcon /> },
+            {name:"Interview", url:"/Interv", icon:<PersonAddIcon />},
+            {name:'Upload Resume', url:"/FileUpload", icon:<BackupIcon />},
+            {name:'Home', url:"/Homepage", icon:<HomeIcon />}]
+    
+            return rt}
+  else
+  {
+     return []
+  }           
+            
+    
+  }
+  
 
 const styles = (theme) => ({
     root: {
@@ -91,7 +232,10 @@ export default function CustomizedDialogs() {
 
     const [displayall, setDisplayall] = useState(true);
     const [displayByName, setDisplayByName] = useState(false);
-
+    const A=parseInt(sessionStorage.A)
+    const B=parseInt(sessionStorage.B)
+    const C=parseInt(sessionStorage.C)
+    const D=parseInt(sessionStorage.D)
 
     const [nameSelect, setNameSelect] = useState('')
 
@@ -132,7 +276,7 @@ export default function CustomizedDialogs() {
     return (<div>
         <div style={{ position: 'absolute', marginTop: '40px', marginLeft: '400px', width: "800px", }}>
             {/* // choices of operations */}
-            <PersistentDrawerLeft pages={rt} title="Interview Section" />
+            <PersistentDrawerLeft pages={Display1(A,B,C,D)} title="Interview Section" />
             <div align="right">
                 <Formik initialValues={{ names: '' }} onSubmit={submit2}>
                     {(formik) => (

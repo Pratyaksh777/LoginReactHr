@@ -4,12 +4,15 @@ import ExperienceForm from './ExperienceForm';
 import EducationForm from './EducationForm';
 import SkillsForm from './SkillsForm';
 
+var interviewee_id
+
 export class UserProfile extends Component {
     state = {
         step: 1,
         firstName: '',
         lastName: '',
         email: '',
+        mobile_number: '',
         state: '',
         city: '',
         jobTitle: '',
@@ -22,6 +25,13 @@ export class UserProfile extends Component {
         skills: '',
         interests: ''
     };
+    componentDidMount() {
+      if(sessionStorage.getItem("userData")){
+        // const item = sessionStorage.getItem("userData");
+        interviewee_id = sessionStorage.userData;
+        // console.log(item)
+      }
+    }
     // Proceed to next step
     nextStep = () => {
         const { step } = this.state;
@@ -44,8 +54,8 @@ export class UserProfile extends Component {
     };
         render() {
             const {step} = this.state;
-            const {firstName,lastName,email,city,state,jobTitle,compName,industry,compLocation,schoolName,studyField,degree,skills,interests} = this.state;
-            const values = {firstName,lastName,email,city,state,jobTitle,compName,industry,compLocation,schoolName,studyField,degree,skills,interests};
+            const {firstName,lastName,email,mobile_number,city,state,jobTitle,compName,industry,compLocation,schoolName,studyField,degree,skills,interests} = this.state;
+            const values = {firstName,lastName,email,mobile_number,city,state,jobTitle,compName,industry,compLocation,schoolName,studyField,degree,skills,interests,interviewee_id};
 
             switch (step) {
               case 1: 
@@ -84,7 +94,7 @@ export class UserProfile extends Component {
                   />
                 );
               default:
-                 
+                 // NULL
             }
         }
     }

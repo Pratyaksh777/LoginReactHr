@@ -32,6 +32,11 @@ function FetchComp() {
 
   const [load, setload] = useState(false)
   const [role_change, setRole_change] = useState(false)
+  const[A,setA]=useState(false)
+  const[B,setB]=useState(false)
+  const[C,setC]=useState(false)
+  const[D,setD]=useState(false)
+
 
 
 
@@ -46,6 +51,7 @@ function FetchComp() {
     } else {
       arr[props.index].Role_id = 1;
     }
+    
 
     arr[props.index].DOB = arr[props.index].DOB.slice(0, 10);
     console.log(arr[props.index]);
@@ -55,6 +61,7 @@ function FetchComp() {
 
       console.log(response.message);
       setRole_change(!role_change);
+     
     })
 
 
@@ -63,8 +70,76 @@ function FetchComp() {
   };
 
   const handleChangeRole1 = (props) => {
+    if (arr[props.index].A == 1) {
+      arr[props.index].A = 0;
+    } else {
+      arr[props.index].A = 1;
+    }
+    
+
+    arr[props.index].DOB = arr[props.index].DOB.slice(0, 10);
+    console.log(arr[props.index]);
+ axios.patch("/interviewees/" + props.id, arr[props.index]).then(response => {
+      setA(!A)
+    })
+
+
     
     }
+    const handleChangeRole2 = (props) => {
+      if (arr[props.index].B == 1) {
+        arr[props.index].B = 0;
+      } else {
+        arr[props.index].B = 1;
+      }
+      
+
+    arr[props.index].DOB = arr[props.index].DOB.slice(0, 10);
+    console.log(arr[props.index]);
+   axios.patch("/interviewees/" + props.id, arr[props.index]).then(response => {
+        setB(!B)
+      })
+  
+  
+      
+      }
+
+      const handleChangeRole3 = (props) => {
+        if (arr[props.index].C == 1) {
+          arr[props.index].C = 0;
+        } else {
+          arr[props.index].C = 1;
+        }
+        
+
+    arr[props.index].DOB = arr[props.index].DOB.slice(0, 10);
+    console.log(arr[props.index]);
+     axios.patch("/interviewees/" + props.id, arr[props.index]).then(response => {
+          setC(!C)
+        })
+    
+    
+        
+        }
+        const handleChangeRole4 = (props) => {
+          if (arr[props.index].D == 1) {
+            arr[props.index].D = 0;
+          } else {
+            arr[props.index].D = 1;
+          }
+          
+
+    arr[props.index].DOB = arr[props.index].DOB.slice(0, 10);
+    console.log(arr[props.index]);
+       axios.patch("/interviewees/" + props.id, arr[props.index]).then(response => {
+            setD(!D)
+          })
+      
+      
+          
+          }
+      
+    
 
 
 
@@ -108,7 +183,7 @@ function FetchComp() {
       source.cancel();
     };
 
-  }, [role_change])
+  }, [role_change],[A],[B],[C],[D])
 
 
   if (sessionStorage.getItem("userData")) {
@@ -120,6 +195,7 @@ function FetchComp() {
   }
   
   const ida=parseInt(sessionStorage.Roleid)
+  
   const display=(item,index)=>
   {if(ida!=0 && ida!=1)
   {return(
@@ -132,31 +208,31 @@ function FetchComp() {
       inputProps={{ 'aria-label': 'secondary checkbox' }}/></Card.Text>
       <Card.Text>
         Update<Checkbox
-      //checked={item.Role_id}
+      checked={item.A}
       color="primary"
-      //onChange={() => handleChangeRole1({ Role_id: item.Role_id, id: item.id, index: index })}
-      //inputProps={{ 'aria-label': 'secondary checkbox' }}
+      onChange={() => handleChangeRole1({ A: item.A, id: item.id, index: index })}
+      inputProps={{ 'aria-label': 'secondary checkbox' }}
     />Opportunity
        <Checkbox
-      //checked={item.Role_id}
+      checked={item.B}
       color="primary"
      
-      //onChange={() => handleChangeRole1({ Role_id: item.Role_id, id: item.id, index: index })}
-    //  inputProps={{ 'aria-label': 'secondary checkbox' }}
+      onChange={() => handleChangeRole2({ B: item.B, id: item.id, index: index })}
+     inputProps={{ 'aria-label': 'secondary checkbox' }}
     />
     </Card.Text>
     <Card.Text>
         Interview <Checkbox
-     // checked={item.Role_id}
+     checked={item.C}
       color="primary"
-      //onChange={() => handleChangeRole1({ Role_id: item.Role_id, id: item.id, index: index })}
-     // inputProps={{ 'aria-label': 'secondary checkbox' }}
+      onChange={() => handleChangeRole3({ C: item.C, id: item.id, index: index })}
+      inputProps={{ 'aria-label': 'secondary checkbox' }}
     />Upload
        <Checkbox
-     // checked={item.Role_id}
+     checked={item.D}
       color="primary"
-    //  onChange={() => handleChangeRole1({ Role_id: item.Role_id, id: item.id, index: index })}
-      //inputProps={{ 'aria-label': 'secondary checkbox' }}
+      onChange={() => handleChangeRole4({ D: item.D, id: item.id, index: index })}
+      inputProps={{ 'aria-label': 'secondary checkbox' }}
     />
     </Card.Text></Card>) }}
   return (

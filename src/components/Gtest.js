@@ -66,7 +66,13 @@ function resp( bday){
      axios.post("/googleup", {"idToken":gUser, "DOB":bday, "UserId":uid}).then(response =>{
          console.log(response);
          if(response.data.success=="True"){
-            sessionStorage.setItem('userData',response.data.person);
+            sessionStorage.setItem('userData',response.data.persondat.id);
+            sessionStorage.setItem('Roleid',response.data.persondat.Role_id)
+          // sessionStorage.setItem('Modules',response.data.persondat.Modules)
+          sessionStorage.setItem('A',response.data.persondat.A)
+          sessionStorage.setItem('B',response.data.persondat.B)
+          sessionStorage.setItem('C',response.data.persondat.C)
+          sessionStorage.setItem('D',response.data.persondat.D)
             sessionStorage.setItem("Social", "Google");
             window.location.replace("http://localhost:3000/Homepage")
           }
@@ -240,7 +246,7 @@ export default function Gtest() {
   const[error, seterror] = useState({errorval:false, loading:false})
   const [sign, setsign] = useState(false);
   const onSubmit = values => {
-    console.log(values)
+    seterror({errorval:false, loading:true})
     axios.post("/interviewees", values).then(response =>{
         if(response.data.success==="false"){
           // seterror(true)
@@ -292,11 +298,16 @@ export default function Gtest() {
         text='Signing In...'
         >
     <Container component="main" maxWidth="xs">
-        <GoogleLogin
+        
+       
+        
+      <CssBaseline />
+      <div className={classes.paper}>
+      <GoogleLogin
           clientId={CLIENT_ID}
           apiKey ={API_KEY}
           scope="profile email https://www.googleapis.com/auth/user.birthday.read"
-          buttonText='Sign In with Google'
+          buttonText='Sign Up with Google'
           onSuccess={(googleUser) =>{
             seterror({errorval:false, loading:true});  
             login(googleUser);
@@ -306,10 +317,7 @@ export default function Gtest() {
           responseType='code,token'
           discoveryDocs ={DISCOVERY_DOCS}
         />
-       
-        
-      <CssBaseline />
-      <div className={classes.paper}>
+
       <h3>OR</h3>
         <Avatar className={classes.avatar}>
           

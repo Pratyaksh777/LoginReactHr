@@ -31,7 +31,13 @@ function login(googleUser){
   axios.post("/googlesign", {"idToken":gUser}).then(response =>{
       console.log(response);
       if(response.data.success=="True"){
-        sessionStorage.setItem('userData',response.data.person);
+        sessionStorage.setItem('userData',response.data.persondat.id);
+        sessionStorage.setItem('Roleid',response.data.persondat.Role_id)
+          // sessionStorage.setItem('Modules',response.data.persondat.Modules)
+          sessionStorage.setItem('A',response.data.persondat.A)
+          sessionStorage.setItem('B',response.data.persondat.B)
+          sessionStorage.setItem('C',response.data.persondat.C)
+          sessionStorage.setItem('D',response.data.persondat.D) 
         sessionStorage.setItem("Social", "Google");
         window.location.replace("http://localhost:3000/Homepage")
       }

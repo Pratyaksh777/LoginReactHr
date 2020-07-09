@@ -22,7 +22,9 @@ function LogOut() {
     }
     if(sessionStorage.getItem("userData")){
         if(sessionStorage.getItem("Social")){
-            soc="Google";
+            if(sessionStorage.Social==="Google"){
+                soc = "Google";
+            };
         }
         console.log(sessionStorage.userData.toString())
     }
@@ -37,6 +39,7 @@ function LogOut() {
              buttonText='Logout'
              onLogoutSuccess={ ()=>{ 
                 lastTime();
+                soc="";
                 sessionStorage.clear();
                  setloghook(true); 
              } }
